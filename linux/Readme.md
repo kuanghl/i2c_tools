@@ -1,0 +1,74 @@
+- tools
+  - i2cdetect : 扫描i2c总线上的设备
+  - i2cget : 读取i2c设备上的某个寄存器值
+  - i2cset : 将值写入i2c设备上的某个寄存器
+  - i2cdump : 读取某个i2c设备所有寄存器的值
+  - i2ctransfer : 一次性从i2c设备读取多个寄存器的值
+  - i2c-stub-from-dum : 使用文件模拟i2c设备进行虚拟测试
+
+- i2cdetect [-y] [-a] [-q|-r] I2CBUS [FIRST LAST]
+  - -y : 关闭交互模式
+  - -a : 强制扫描非常规地址（不推荐）
+  - -q : 使用 SMBus 的 "quick write" 命令进行探测（不推荐）
+  - -r : 使用 SMBus 的 "receive byte" 命令进行探测（不推荐）
+  - I2CBUS : i2c-x中的x总线编号
+  - FIRST LAST : 操作地址范围FIRST~LAST
+  - -F : 显示适配器实现的功能列表并退出
+  - -V : 显示版本信息并退出
+  - -l : 输出已安装 I2C 总线的列表
+  - eg : sudo i2cdetect -y -r 0 0x50 0x5
+
+- i2cget [-f] [-y] [-a] I2CBUS CHIP-ADDRESS [DATA-ADDRESS [MODE]]
+  - -f : 强制读取数据，即使设备忙
+  - -y : 不提示确认，直接读取数据
+  - -a : 以字节形式输出数据
+  - I2CBUS : 指定I2C总线的编号
+  - CHIP-ADDRESS : 指定I2C设备的地址。
+  - DATA-ADDRESS : 可选参数,指定要读取的寄存器地址
+  - MODE : 可选参数,指定读取数据的模式
+  - eg : sudo i2cget -y -a 0  0x53 0x00 c
+
+- i2cset [-f] [-y] [-m MASK] [-r] [-a] I2CBUS CHIP-ADDRESS DATA-ADDRESS [VALUE] ... [MODE]
+  - -f : 强制执行操作,即使总线被锁定也可以使用
+  - -y : 不要询问确认,直接执行操作。
+  - -m MASK : 使用位掩码设置数据
+  - -r : 从设备读回数据
+  - -a : 自动增加数据地址
+  - I2CBUS : I2C总线号,例如/dev/i2c-1
+  - CHIP-ADDRESS : I2C设备的地址
+  - DATA-ADDRESS : 要写入或读取的数据地址
+  - VALUE : 要写入的数据值
+  - MODE : 可选参数,用于指定数据的格式,例如"b"表示字节,"w"表示字
+  - eg : sudo i2cset -r -a 0 0x53 0x30 0x24 
+
+- i2cdump [-f] [-y] [-r first-last] [-a] I2CBUS ADDRESS [MODE [BANK [BANKREG]]]
+  - -f : 强制访问设备
+  - -y : 关闭人机交互模式
+  - -r first-last : 指定寄存器范围,只能扫描从first到last地址区域
+  - -a : 强制扫描非常规地址
+  - I2CBUS : i2c-x中的x总线编号
+  - ADDRESS : 设备地址(指定设备)
+  - MODE : 指定读取的大小,b字节,w字,s是SMBus块,i是i2c块,c连续字节
+  - BANK : i2c设备的BANK号
+  - BANKREG : BANK中的寄存器号
+  - eg : sudo i2cdump -f -y 0 0x53 c
+
+- i2ctransfer [-f] [-y] [-v] [-V] [-a] I2CBUS DESC [DATA] [DESC [DATA]]...
+  - -f : 强制执行操作,即使设备忙碌
+  - -y : 不要询问用户确认,直接执行操作
+  - -v : 显示详细的输出信息
+  - -V : 显示版本信息
+  - -a : 自动发送读取命令,而不需要显式指定
+  - I2CBUS : i2c-x中的x总线编号
+  - DESC : 以此形式描述传输:{r|w}LENGTH[@address],读或写一定长度的字节到某设备0地址
+  - DATA : DESC描述的字节数据,空格分开
+  - eg : sudo i2ctransfer -y -a 0 r3@0x53
+
+- i2c-stub-from-dump [-V] [-f] [-t] [-d <delay>] [-c <count>] <i2c-device> <dump-file>
+  - -V：显示命令的版本信息。
+  - -f：强制创建i2c stub设备，即使设备已经存在。
+  - -t：在创建设备后运行i2c-stub-test测试程序。
+  - -d \<delay>：指定每个字节之间的延迟时间（以毫秒为单位）。
+  - -c \<count>：指定要从转储文件中读取的字节数。
+  - \<i2c-device>：指定i2c设备文件的路径。
+  - \<dump-file>：指定i2c数据转储文件的路径。
