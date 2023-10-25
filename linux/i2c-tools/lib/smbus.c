@@ -13,7 +13,7 @@
 
 #include <errno.h>
 #include <stddef.h>
-#include <i2c/smbus.h>
+#include <smbus.h>
 #include <sys/ioctl.h>
 #include <linux/types.h>
 #include <linux/i2c.h>

@@ -23,8 +23,20 @@ add_library(i2c_st STATIC ${CMAKE_CURRENT_SOURCE_DIR}/smbus.c ${CMAKE_CURRENT_SO
 target_compile_options(i2c_st PRIVATE -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wnested-externs -Winline -W -Wundef -Wmissing-prototypes -Iinclude)
 set_target_properties(i2c_st PROPERTIES OUTPUT_NAME "i2c")
 
+# OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE 755
+# OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ 644
 # install
-# todo...
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libi2c.so.${LIB_VER}
+        DESTINATION "${LIBDIR}"
+        PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/libi2c.a
+        DESTINATION "${LIBDIR}"
+        PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ)
+
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/libi2c.3
+        DESTINATION "${MAN3DIR}"
+        PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ WORLD_READ)
 
 # uninstall
 # todo...

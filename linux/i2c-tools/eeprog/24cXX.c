@@ -23,7 +23,7 @@
 #include <errno.h>
 #include <assert.h>
 #include <string.h>
-#include <i2c/smbus.h>
+#include <smbus.h>
 #include "24cXX.h"
 
 /*

@@ -1,5 +1,15 @@
-- uninstall
 
+##### How to use.
+- build
+```sh
+mkdir build
+cd build
+cmake ..
+make -j8
+sudo make install
+```
+
+- uninstall
 ```sh
 # if has make uninstall cmds
 sudo make uninstall
@@ -9,3 +19,5 @@ sudo xargs rm < install_manifest.txt
 sudo make install &> make_install.log
 # 根据内部的安装文件一个个rm
 ```
+
+- [i2c_tool command](./linux/Readme.md)
