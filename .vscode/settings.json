@@ -3,6 +3,8 @@
         "i2c-dev.h": "c",
         "stddef.h": "c",
         "ioctl.h": "c",
-        "types.h": "c"
+        "types.h": "c",
+        "atomic": "cpp",
+        "condition_variable": "cpp"
     }
 }

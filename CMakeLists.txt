@@ -5,4 +5,8 @@ cmake_minimum_required(VERSION 3.1)
 project(i2c)
 
 # add and build sub
-add_subdirectory(linux)
+if(UNIX)
+    add_subdirectory(linux)
+elseif(WIN32)
+    add_subdirectory(windows)
+endif()
