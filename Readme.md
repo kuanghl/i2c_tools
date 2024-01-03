@@ -1,5 +1,12 @@
+##### Dependences.
+
+- Libraries(gcc -lic)
+```sh
+sudo apt-get install libi2c-dev
+```
 
 ##### How to use.
+
 - build
 ```sh
 mkdir build
